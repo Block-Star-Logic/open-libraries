@@ -6,8 +6,6 @@ pragma solidity >=0.8.0 <0.9.0;
 library LOpenUtilities {
 
 
-
-
     function isContained(address a, address [] memory b ) pure internal returns (bool) {
         for(uint256 x = 0; x < b.length; x++){
             if(a == b[x]) {
@@ -16,6 +14,38 @@ library LOpenUtilities {
         }
         return false; 
     }
+    
+    function append(address [] memory a, address[] memory b) pure internal returns (address [] memory) {
+        uint256 total = a.length + b.length; 
+        address [] memory c = new address[](total); 
+        uint256 y = 0; 
+        uint256 z = 0; 
+        for(uint256 x = 0; x < total; x++) {
+            if(x < a.length) {
+                c[x] = a[y];
+                y++;
+            }
+            else { 
+                c[x] = b[z];
+                z++;
+            }
+        }
+        return c; 
+    }
+
+    function remove(address a, address[] memory b) pure internal returns (address [] memory){
+        address [] memory c = new address[](b.length-1);
+        uint256 y = 0; 
+        for(uint256 x = 0; x < b.length; x++) {
+            address d = b[x];
+            if( a != d){
+                c[y] = d; 
+                y++;
+            }
+        }
+        return c; 
+    }
+
 
     function isContained(uint256 z, uint256 [] memory y) pure internal returns (bool) {
         
@@ -75,6 +105,5 @@ library LOpenUtilities {
     function isEqual(string memory a, string memory b) pure internal returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b)))); 
     }
-
 
 }
