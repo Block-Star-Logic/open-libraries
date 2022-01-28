@@ -5,6 +5,9 @@ pragma solidity >=0.8.0 <0.9.0;
 
 library LOpenUtilities {
 
+    // version 0.3
+
+    // ===================== ADDRESS ============================================================
 
     function isContained(address a, address [] memory b ) pure internal returns (bool) {
         for(uint256 x = 0; x < b.length; x++){
@@ -38,14 +41,19 @@ library LOpenUtilities {
         uint256 y = 0; 
         for(uint256 x = 0; x < b.length; x++) {
             address d = b[x];
-            if( a != d){
+            if( a != d){     
+                if(y == c.length){ // i.e. element not found
+                    return b; 
+                }
                 c[y] = d; 
                 y++;
+           
             }
         }
         return c; 
     }
 
+    // ===================== UINT256 ============================================================
 
     function isContained(uint256 z, uint256 [] memory y) pure internal returns (bool) {
         
@@ -56,6 +64,24 @@ library LOpenUtilities {
         }
         return false; 
     }
+
+    function remove(uint256 a, uint256[] memory b) pure internal returns (uint256 [] memory){
+        uint256 [] memory c = new uint256[](b.length-1);
+        uint256 y = 0; 
+        for(uint256 x = 0; x < b.length; x++) {
+            uint256 d = b[x];
+            if( a != d){    
+                if(y == c.length){ // i.e. element not found
+                    return b; 
+                } 
+                c[y] = d; 
+                y++;
+            }
+        }
+        return c; 
+    }
+
+    // ===================== STRINGS ============================================================
 
     function isContained(string memory a, string [] memory b ) pure internal returns (bool) {
         for(uint256 x = 0; x < b.length; x++){
@@ -76,6 +102,9 @@ library LOpenUtilities {
         for(uint256 x = 0; x < b.length; x++) {
             string memory d = b[x];
             if(!isEqual(a, d)){
+                if(y == c.length){ // i.e. element not found
+                    return b; 
+                }
                 c[y] = d; 
                 y++;
             }
